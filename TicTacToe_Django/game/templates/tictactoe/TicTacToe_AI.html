@@ -1,4 +1,6 @@
 {% load static %}
+{% load livereload_tags %}
+
 <!DOCTYPE html>
 <html>
 
@@ -6,6 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>TicTacToe</title>
+  {% livereload_script %}
   <link href="{% static 'tictactoe/style.css' %}" rel="stylesheet" type="text/css" />
 </head>
 
@@ -34,6 +37,8 @@
   <button onclick = "clear_table()">Clear</button>
 
   <div id="winning">&nbsp;</div>
+
+  <div id="check_database">&nbsp;</div>
   
 </body>
 

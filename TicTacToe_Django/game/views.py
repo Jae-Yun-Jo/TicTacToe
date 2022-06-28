@@ -12,6 +12,7 @@ def get_data(request):
         row = json.load(request)["data"]
         name = row["name"]
         decisions = row["decisions"]
+        print(decisions)
         play = Game_Played.objects.create(winner=name, decisions=decisions)
         play.save()
     return render(request, "tictactoe\TicTacToe_AI.html", {

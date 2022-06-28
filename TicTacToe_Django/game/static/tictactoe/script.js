@@ -9,7 +9,7 @@ let com_num_2_lst = []
 
 let lst_all = []
 let decisions = ""
-let winner = ""
+let winner = 0
 
 const winning_numbers = [[1, 2, 3], [4, 5, 6], 
                         [7, 8, 9], [1, 5, 9],
@@ -28,7 +28,9 @@ function display(num){
     winning_check()
     computer_display()
     collect_data()
-    
+    if (winner > 0){
+      django()
+    }
   }
 }
 
@@ -51,7 +53,7 @@ function computer_display(){
     if (numbers_player1.length + numbers_player2.length != 9 && game_stop == true){
     document.getElementById(com_num.toString()).innerHTML = player2
       numbers_player2.push(com_num.toString())
-      lst_all.push(ran_num.toString())
+      lst_all.push(com_num.toString())
     }
   }
   winning_check()
@@ -67,7 +69,7 @@ function clear_table(){
   game_stop = true
   lst_all = []
   decisions = ""
-  winner = ""
+  winner = 0
 }
 
 function winning_check(){
@@ -88,74 +90,44 @@ function winning_check(){
         document.getElementById('winning').innerHTML = 'Player 1 won!'
           game_stop = false
           winner = 1
-          data = {'name': winner,
-              'decisions': decisions}
-          fetch("/get_data", {
-            method:"POST",
-            headers:{
-              'Accept':'application/json',
-              'X-Requested-With':'XMLHttpRequest',
-            },
-            body: JSON.stringify({
-              'data':data
-            })
-            }).then(result => {
-                // do something with the result
-                console.log("Completed with result:", result);
-            }).catch(err => {
-                // if any error occured, then catch it here
-                console.log(err);
-            });
+          
+          
       }
         else if (check_2.length == 3){
         document.getElementById('winning').innerHTML = 'Computer won!'
           game_stop = false
           winner = 2
-          data = {'name': winner,
-              'decisions': decisions}
-          fetch("/get_data", {
-            method:"POST",
-            headers:{
-              'Accept':'application/json',
-              'X-Requested-With':'XMLHttpRequest',
-            },
-            body: JSON.stringify({
-              'data':data
-            })
-            }).then(result => {
-                // do something with the result
-                console.log("Completed with result:", result);
-            }).catch(err => {
-                // if any error occured, then catch it here
-                console.log(err);
-            });
+          
       }
         else if(game_stop == true && numbers_player1.length + numbers_player2.length == 9){
           document.getElementById('winning').innerHTML = "No one won"
           winner = 3
-          data = {'name': winner,
-              'decisions': decisions}
-          fetch("/get_data", {
-            method:"POST",
-            headers:{
-              'Accept':'application/json',
-              'X-Requested-With':'XMLHttpRequest',
-            },
-            body: JSON.stringify({
-              'data':data
-            })
-            }).then(result => {
-                // do something with the result
-                console.log("Completed with result:", result);
-            }).catch(err => {
-                // if any error occured, then catch it here
-                console.log(err);
-            });
+          
         }
       }
 
       
     }
+}
+function django(){
+  data = {'name': winner,
+        'decisions': decisions}
+  fetch("/get_data", {
+    method:"POST",
+    headers:{
+   'Accept':'application/json',
+   'X-Requested-With':'XMLHttpRequest',
+    },
+  body: JSON.stringify({
+    'data':data
+    })
+  }).then(result => {
+    // do something with the result
+    console.log("Completed with result:",data['decisions'],result);
+  }).catch(err => {
+  // if any error occured, then catch it here
+    console.log(err);
+  });
 }
 
 function computer_check(){
@@ -204,5 +176,5 @@ function collect_data(){
   for (let i = 0; i < lst_all.length; i++){
     decisions = decisions + lst_all[i]
   }
-  document.getElementById("check_database").innerHTML = decisions + " " + winner
+  document.getElementById("check_database").innerHTML = decisions + " " + winner + " " + "hi"
 }
