@@ -1,0 +1,16 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+table, td{
+	border-collapse: collapse;
+ 	border: 1px solid;
+  width: 25%;
+}
+
+td{
+	height: 50px;
+  font-size: 40px;
+  text-align: center;
+}
